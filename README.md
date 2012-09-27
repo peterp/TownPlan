@@ -1,6 +1,6 @@
 TownPlan is an iOS UIView layout helper.
 
-Laying out view in code is rather tedious. I hope that TownPlan improves
+Laying out views in code is rather tedious. I hope that TownPlan improves
 that experience.
 
 Alignment Helper
