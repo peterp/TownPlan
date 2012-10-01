@@ -4,10 +4,25 @@ Laying out views in code is rather tedious. I hope that TownPlan improves
 that experience.
 
 
-Layout Views
-------------
+Layout Views with Orientation Changes
+-------------------------------------
 
-You can set a bunch of points against orientation.
+Adds a bunch of functionality to a view controller which allows you to specify
+a views position and the orientation change that it should respond to.
+
+### Usage
+
+    [self layoutView:view forOrientation:UIInterfaceOrientationPortrait 
+          toPosition:CGPointMake(0, 0)];
+
+    [self layoutView:view forOrientation:UIInterfaceOrientationLandscapeLeft 
+          toPosition:CGPointMake(100, 100)];
+
+
+
+
+
+
 
 
 Alignment
@@ -28,7 +43,7 @@ Valid arguments are:
     - TPAlignMiddle (Y axis)
     - TPAlignCenter (X axis)
 
-### Example
+### Usage
 
     UIView *pewView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
     pewView.backgroundColor = [UIColor brownColor];

@@ -44,9 +44,6 @@ typedef NSUInteger TPOrientation;
 
 
 
-
-
-
 @interface UIView (TownPlan)
 
 - (void)align:(TPAlign)align fixed:(BOOL)fixed;
@@ -55,11 +52,9 @@ typedef NSUInteger TPOrientation;
 
 
 
-
 @interface UIViewController (TownPlan)
 
 @property (nonatomic, retain) id townPlanLayouts;
-
 
 - (void)layoutView:(UIView *)view forOrientation:(UIInterfaceOrientation)orientation toPosition:(CGPoint)position;
 - (void)layoutForOrientation:(UIInterfaceOrientation)orientation;
@@ -68,4 +63,3 @@ typedef NSUInteger TPOrientation;
 - (void)setLayouts:(NSArray *)layouts forOrientation:(UIInterfaceOrientation)orientation;
 
 @end
-

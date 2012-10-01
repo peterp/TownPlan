@@ -115,7 +115,6 @@ static char const * const townPlanLayoutsKey = "townPlanLayouts";
   [self setLayouts:layouts forOrientation:orientation];
 }
 
-
 - (void)layoutForOrientation:(UIInterfaceOrientation)orientation {
 
   NSArray *layouts = [self getLayoutsForOrientation:orientation];
