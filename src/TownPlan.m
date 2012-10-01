@@ -10,13 +10,16 @@
 
 @implementation UIView (TownPlan)
 
-- (void)align:(TPAlign)align fixed:(BOOL)fixed
-{
+- (void)align:(TPAlign)align fixed:(BOOL)fixed {
   
   float subviewX = self.frame.origin.x;
   float subviewY = self.frame.origin.y;
   float subviewW = self.frame.size.width;
   float subviewH = self.frame.size.height;
+  
+  // TODO: Check for Superview.
+  
+  self.autoresizingMask = TPResizeNone;
   
   if (align & TPAlignTop) {
     subviewY = 0;
