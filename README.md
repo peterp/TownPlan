@@ -18,12 +18,15 @@ a views position and the orientation change that it should respond to.
     [self layoutView:view forOrientation:UIInterfaceOrientationLandscapeLeft 
           toPosition:CGPointMake(100, 100)];
 
+And then add this your view controller!
+
+    - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+                                    duration:(NSTimeInterval)duration {
+      [self layoutForOrientation:orientation];
+    }
 
 
-
-
-
-
+Now `view` will change position when your device changes orientation.
 
 Alignment
 ---------
