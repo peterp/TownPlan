@@ -50,64 +50,77 @@
 
 
 
-static char const * const TPLayoutsKey = "TPLayoutsKey";
+static char const * const townPlanLayoutsKey = "townPlanLayouts";
 
 @implementation UIViewController (TownPlan)
 
 // faking instance variables with Associative References
-@dynamic TPLayouts;
+@dynamic townPlanLayouts;
 
-- (id)TPLayouts {
-  return objc_getAssociatedObject(self, TPLayoutsKey);
+- (id)townPlanLayouts {
+  return objc_getAssociatedObject(self, townPlanLayoutsKey);
 }
 
-- (void)setTPLayouts:(id)newTPLayouts {
-  objc_setAssociatedObject(self, TPLayoutsKey, newTPLayouts, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setTownPlanLayouts:(id)newTownPlanLayouts {
+  objc_setAssociatedObject(self, townPlanLayoutsKey, newTownPlanLayouts, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSMutableArray *)getLayoutsForOrientation:(TPOrientation)orientation {
+
+
+- (NSMutableArray *)getLayoutsForOrientation:(UIInterfaceOrientation)orientation {
   
-  if (self.TPLayouts == nil) {
-    self.TPLayouts = [NSMutableDictionary dictionary];
+  if (self.townPlanLayouts == nil) {
+    self.townPlanLayouts = [NSMutableDictionary dictionary];
   }
   
-  NSMutableArray *layouts = [self.TPLayouts objectForKey:[NSNumber numberWithInt:orientation]];
+  // TODO: Would anyone really care if it's left or right orientations?
+  NSString *orientationKey = @"portrait";
+  if (UIInterfaceOrientationIsLandscape(orientation)) {
+    orientationKey = @"landscape";
+  }
+  
+  NSMutableArray *layouts = [self.townPlanLayouts objectForKey:orientationKey];
   if (layouts == nil) {
     layouts = [NSMutableArray array];
-    [self.TPLayouts setObject:layouts forKey:[NSNumber numberWithInt:orientation]];
   }
   
   return layouts;
 }
 
+- (void)setLayouts:(NSArray *)layouts forOrientation:(UIInterfaceOrientation)orientation {
+  
+  NSString *orientationKey = @"portrait";
+  if (UIInterfaceOrientationIsLandscape(orientation)) {
+    orientationKey = @"landscape";
+  }
+  
+  [self.townPlanLayouts setObject:layouts forKey:orientationKey];
+}
 
-
-- (void)layoutView:(UIView *)view withPosition:(CGPoint)position forOrientation:(TPOrientation)orientation {
-  // at some stage we should accept size as well.
-  // we would never need to accept masks in this mode.
+- (void)layoutView:(UIView *)view forOrientation:(UIInterfaceOrientation)orientation toPosition:(CGPoint)position {
   
   NSMutableArray *layouts = [self getLayoutsForOrientation:orientation];
-  
-  // should probably use a predicate here to delete the old object.
+  // TODO: Change this to a predicate.
   for (NSDictionary *layout in layouts) {
     if (layout[@"view"] == view) {
       [layouts removeObject:layout];
       break;
     }
   }
-  
-  [layouts addObject:@{@"view": view, @"position":[NSValue valueWithCGPoint:position]}];
+
+  [layouts addObject:@{@"view": view, @"position": [NSValue valueWithCGPoint:position]}];
+  [self setLayouts:layouts forOrientation:orientation];
 }
 
-- (void)layoutForOrientation:(TPOrientation)orientation {
-  
-  for (NSDictionary *layout in [self getLayoutsForOrientation:orientation]) {
+
+- (void)layoutForOrientation:(UIInterfaceOrientation)orientation {
+
+  NSArray *layouts = [self getLayoutsForOrientation:orientation];
+  for (NSDictionary *layout in layouts) {
     UIView *view = (UIView *)layout[@"view"];
     CGPoint position = [layout[@"position"] CGPointValue];
     view.frame = CGRectMake(position.x, position.y, view.frame.size.width, view.frame.size.height);
   }
-  
 }
-
 
 @end

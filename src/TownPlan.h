@@ -21,6 +21,7 @@ enum {
 };
 typedef NSUInteger TPAlign;
 
+// Because I think the latter are too verbose.
 enum {
   TPResizeNone      = UIViewAutoresizingNone,
   TPResizeGapLeft   = UIViewAutoresizingFlexibleLeftMargin,
@@ -32,13 +33,17 @@ enum {
 };
 typedef NSUInteger TPResize;
 
-
-
+// Same here, but don't use them if you don't want too.
 enum {
-  TPOrientationPortrait = UIInterfaceOrientationMaskPortrait,
-  TPOrientationLandscape = UIInterfaceOrientationMaskLandscape
+  TPOrientationLandscape     = UIInterfaceOrientationLandscapeLeft,
+  TPOrientationLandscapeFlip = UIInterfaceOrientationLandscapeRight,
+  TPOrientationPortrait      = UIInterfaceOrientationPortrait,
+  TPOrientationPortraitFlip  = UIInterfaceOrientationPortraitUpsideDown
 };
 typedef NSUInteger TPOrientation;
+
+
+
 
 
 
@@ -48,16 +53,19 @@ typedef NSUInteger TPOrientation;
 
 @end
 
+
+
+
 @interface UIViewController (TownPlan)
 
-@property (nonatomic, retain) id TPLayouts;
-
-- (void)layoutView:(UIView *)view withPosition:(CGPoint)position forOrientation:(TPOrientation)orientation;
-- (void)layoutForOrientation:(TPOrientation)orientation;
-
-- (NSMutableArray *)getLayoutsForOrientation:(TPOrientation)orientation;
+@property (nonatomic, retain) id townPlanLayouts;
 
 
+- (void)layoutView:(UIView *)view forOrientation:(UIInterfaceOrientation)orientation toPosition:(CGPoint)position;
+- (void)layoutForOrientation:(UIInterfaceOrientation)orientation;
+
+- (NSMutableArray *)getLayoutsForOrientation:(UIInterfaceOrientation)orientation;
+- (void)setLayouts:(NSArray *)layouts forOrientation:(UIInterfaceOrientation)orientation;
 
 @end
 
