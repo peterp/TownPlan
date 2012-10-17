@@ -10,8 +10,8 @@
 
 @implementation UIView (TownPlan)
 
-- (void)align:(TPAlign)align fixed:(BOOL)fixed {
-  
+- (void)align:(TPAlign)align fixed:(BOOL)fixed
+{  
   float subviewX = self.frame.origin.x;
   float subviewY = self.frame.origin.y;
   float subviewW = self.frame.size.width;
@@ -60,23 +60,23 @@ static char const * const townPlanLayoutsKey = "townPlanLayouts";
 // faking instance variables with Associative References
 @dynamic townPlanLayouts;
 
-- (id)townPlanLayouts {
+- (id)townPlanLayouts
+{
   return objc_getAssociatedObject(self, townPlanLayoutsKey);
 }
 
-- (void)setTownPlanLayouts:(id)newTownPlanLayouts {
-  objc_setAssociatedObject(self, townPlanLayoutsKey, newTownPlanLayouts, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setTownPlanLayouts:(id)newTownPlanLayouts
+{
+  objc_setAssociatedObject(self, townPlanLayoutsKey, newTownPlanLayouts,
+                           OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-
-
-- (NSMutableArray *)getLayoutsForOrientation:(UIInterfaceOrientation)orientation {
-  
+- (NSMutableArray *)getLayoutsForOrientation:(UIInterfaceOrientation)orientation
+{  
   if (self.townPlanLayouts == nil) {
     self.townPlanLayouts = [NSMutableDictionary dictionary];
   }
   
-  // TODO: Would anyone really care if it's left or right orientations?
   NSString *orientationKey = @"portrait";
   if (UIInterfaceOrientationIsLandscape(orientation)) {
     orientationKey = @"landscape";
@@ -90,8 +90,9 @@ static char const * const townPlanLayoutsKey = "townPlanLayouts";
   return layouts;
 }
 
-- (void)setLayouts:(NSArray *)layouts forOrientation:(UIInterfaceOrientation)orientation {
-  
+- (void)setLayouts:(NSArray *)layouts
+    forOrientation:(UIInterfaceOrientation)orientation
+{  
   NSString *orientationKey = @"portrait";
   if (UIInterfaceOrientationIsLandscape(orientation)) {
     orientationKey = @"landscape";
@@ -100,12 +101,15 @@ static char const * const townPlanLayoutsKey = "townPlanLayouts";
   [self.townPlanLayouts setObject:layouts forKey:orientationKey];
 }
 
-- (void)layoutView:(UIView *)view forOrientation:(UIInterfaceOrientation)orientation toPosition:(CGPoint)position {
+- (void)layoutView:(UIView *)view
+    forOrientation:(UIInterfaceOrientation)orientation
+        toPosition:(CGPoint)position
+{
   
   NSMutableArray *layouts = [self getLayoutsForOrientation:orientation];
   // TODO: Change this to a predicate.
   for (NSDictionary *layout in layouts) {
-    if (layout[@"view"] == view) {
+    if ([layout objectForKey:@"view"] == view) {
       [layouts removeObject:layout];
       break;
     }
@@ -115,12 +119,13 @@ static char const * const townPlanLayoutsKey = "townPlanLayouts";
   [self setLayouts:layouts forOrientation:orientation];
 }
 
-- (void)layoutForOrientation:(UIInterfaceOrientation)orientation {
-
+- (void)layoutForOrientation:(UIInterfaceOrientation)orientation
+{
   NSArray *layouts = [self getLayoutsForOrientation:orientation];
   for (NSDictionary *layout in layouts) {
-    UIView *view = (UIView *)layout[@"view"];
-    CGPoint position = [layout[@"position"] CGPointValue];
+    //UIView *view = (UIView *)layout[@"view"];
+    UIView *view = (UIView *)[layout objectForKey:@"view"];
+    CGPoint position = [[layout objectForKey:@"position"] CGPointValue];
     view.frame = CGRectMake(position.x, position.y, view.frame.size.width, view.frame.size.height);
   }
 }

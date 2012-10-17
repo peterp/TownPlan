@@ -33,7 +33,7 @@ enum {
 };
 typedef NSUInteger TPResize;
 
-// Same here, but don't use them if you don't want too.
+// Ditto, but don't use these if you don't want too.
 enum {
   TPOrientationLandscape     = UIInterfaceOrientationLandscapeLeft,
   TPOrientationLandscapeFlip = UIInterfaceOrientationLandscapeRight,
@@ -56,7 +56,8 @@ typedef NSUInteger TPOrientation;
 
 @property (nonatomic, retain) id townPlanLayouts;
 
-- (void)layoutView:(UIView *)view forOrientation:(UIInterfaceOrientation)orientation toPosition:(CGPoint)position;
+- (void)layoutView:(UIView *)view
+    forOrientation:(UIInterfaceOrientation)orientation toPosition:(CGPoint)position;
 - (void)layoutForOrientation:(UIInterfaceOrientation)orientation;
 
 - (NSMutableArray *)getLayoutsForOrientation:(UIInterfaceOrientation)orientation;
