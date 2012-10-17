@@ -11,15 +11,14 @@
 @implementation UIView (TownPlan)
 
 - (void)align:(TPAlign)align fixed:(BOOL)fixed
-{  
+{
+  NSAssert([self superview], @"view should be a subview to call align.");
+
   float subviewX = self.frame.origin.x;
   float subviewY = self.frame.origin.y;
   float subviewW = self.frame.size.width;
   float subviewH = self.frame.size.height;
   
-  // TODO: Check for Superview.
-  
-  self.autoresizingMask = TPResizeNone;
   
   if (align & TPAlignTop) {
     subviewY = 0;
