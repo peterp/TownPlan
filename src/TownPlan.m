@@ -19,7 +19,7 @@
   float subviewW = self.frame.size.width;
   float subviewH = self.frame.size.height;
   
-  // reset the autoresizing mask only when required.
+  // reset the autoresizing mask only when adjusted.
   if (fixed) { self.autoresizingMask = TPResizeNone; }
   
   if (align & TPAlignTop) {
