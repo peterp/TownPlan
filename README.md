@@ -1,5 +1,7 @@
 This project is now defunct, use autolayout instead!
 
+--
+
 TownPlan is an iOS UIView layout helper.
 
 Laying out views in code is rather tedious. I hope that TownPlan improves
